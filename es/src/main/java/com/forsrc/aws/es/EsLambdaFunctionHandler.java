@@ -48,7 +48,7 @@ public class EsLambdaFunctionHandler implements RequestHandler<Map<String, Objec
 		String esEndpoint = System.getenv("ES_ENDPOINT");
 		String esIndex = System.getenv("ES_INDEX");
 		String esType = System.getenv("ES_TYPE");
-		String endpoint = String.format("%s/%s/%s/%s", esEndpoint, esType, id);
+		String endpoint = String.format("%s/%s/%s", esEndpoint, esType, id);
 		System.out.println("--> endpoint: " + endpoint);
 		return endpoint;
 	}
