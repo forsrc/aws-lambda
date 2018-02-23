@@ -27,7 +27,7 @@ public class EsHttpResponseHandler implements HttpResponseHandler<AmazonWebServi
 		TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
 		};
 		Map<String, Object> map = new ObjectMapper().readValue(text, typeRef);
-		System.out.println("---> count: " + map.get("conut"));
+		System.out.println("--> size: " + map.size());
 		System.out.println("--> EsHttpResponseHandler: " + response.getStatusCode());
 		System.out.println("--> EsHttpResponseHandler: " + text);
 		AmazonWebServiceResponse<Map<String, Object>> awsResponse = new AmazonWebServiceResponse<>();
