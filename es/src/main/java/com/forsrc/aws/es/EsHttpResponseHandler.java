@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.AmazonWebServiceResponse;
 import com.amazonaws.http.HttpResponse;
 import com.amazonaws.http.HttpResponseHandler;
@@ -14,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 public class EsHttpResponseHandler implements HttpResponseHandler<AmazonWebServiceResponse<Map<String, Object>>> {
+
+    public static final Logger LOGGER = LogManager.getLogger(EsHttpResponseHandler.class);
 
     private CompletableFuture<Map<String, Object>> completableFuture;
 
@@ -27,9 +32,9 @@ public class EsHttpResponseHandler implements HttpResponseHandler<AmazonWebServi
         TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
         };
         Map<String, Object> map = new ObjectMapper().readValue(text, typeRef);
-        System.out.println("--> size: " + map.size());
-        System.out.println("--> EsHttpResponseHandler: " + response.getStatusCode());
-        System.out.println("--> EsHttpResponseHandler: " + text);
+        LOGGER.info("size: {}",  map.size());
+        LOGGER.info("ResponsestatusCode: {}", response.getStatusCode());
+        LOGGER.info("Response content: {}", text);
         AmazonWebServiceResponse<Map<String, Object>> awsResponse = new AmazonWebServiceResponse<>();
         awsResponse.setResult(map);
         completableFuture.complete(map);
