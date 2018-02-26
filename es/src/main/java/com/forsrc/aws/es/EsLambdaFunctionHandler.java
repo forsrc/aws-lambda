@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.Context;
 
 public class EsLambdaFunctionHandler implements RequestHandler<Map<String, Object>, Map<String, Object>> {
 
+    public static final Logger LOGGER = LogManager.getLogger(EsLambdaFunctionHandler.class);
     @Override
     public Map<String, Object> handleRequest(Map<String, Object> input, Context context) {
         Map<String, Object> message = new HashMap<>();
@@ -26,10 +30,10 @@ public class EsLambdaFunctionHandler implements RequestHandler<Map<String, Objec
         }
 
         long id = Long.parseLong(in.toString());
-        System.out.println("--> id: " + id);
+        LOGGER.info("--> id: {}", id);
 
         String queryString = "{}";
-        System.out.println("--> query: " + queryString);
+        LOGGER.info("--> query: {}", queryString);
 
         String endpoint = getEndpoint(id);
 
@@ -49,7 +53,7 @@ public class EsLambdaFunctionHandler implements RequestHandler<Map<String, Objec
         String esIndex = System.getenv("ES_INDEX");
         String esType = System.getenv("ES_TYPE");
         String endpoint = String.format("%s/%s/%s", esEndpoint, esType, id);
-        System.out.println("--> endpoint: " + endpoint);
+        LOGGER.info("--> endpoint: {}", endpoint);
         return endpoint;
     }
 }
